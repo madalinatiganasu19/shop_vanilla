@@ -1,6 +1,7 @@
 <?php
 
-    require_once ("config.php");
+    session_start();
+    require_once("config.php");
 
     $db = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 
