@@ -2,6 +2,7 @@
     session_start();
 
     require_once ("common.php");
+    require_once ('inc/header.php');
 
 
     if (!isset($_SESSION['cart'])) {
@@ -33,20 +34,9 @@
     }
 
     $rows = $db->query($sql);
-
-
 ?>
 
-<html>
-    <head>
-        <meta charset="x-UTF-16LE-BOM">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
 
-        <title>Vanilla Shop</title>
-    </head>
-
-    <body>
         <table>
             <?php foreach ($rows as $row): ?>
             <tr>
@@ -68,5 +58,5 @@
         </table>
 
         <a href="cart.php"><?= translate("Go to cart"); ?></a>
-    </body>
-</html>
+
+<?php require_once ('inc/footer.php'); ?>
