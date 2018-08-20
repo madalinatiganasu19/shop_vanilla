@@ -57,28 +57,28 @@
                 <p>Here are your order details: </p>
                 
                 <table>
-                <tr>
-                    <th>NO.</th>
-                    <th>PRODUCT NAME</th>
-                    <th>PRICE</th>
-                </tr>";
+                    <tr>
+                        <th>NO.</th>
+                        <th>PRODUCT NAME</th>
+                        <th>PRICE</th>
+                    </tr>";
 
         foreach ($result as $row):
 
             $message .= "<tr>
-                                    <td><p>" . $row['id'] . "</p></td>
-                                    <td><p>" . $row['title'] . "</p></td>
-                                    <td><p>$" . $row['price'] . "</p></td>
-                                 </tr>";
+                             <td><p>" . $row['id'] . "</p></td>
+                             <td><p>" . $row['title'] . "</p></td>
+                             <td><p>$" . $row['price'] . "</p></td>
+                         </tr>";
 
         endforeach;
 
         $message .= "<tr>
-                                <th>Total</th>
-                                <th></th>
-                                <th>suma</th>
-                            </tr>
-                          </table>";
+                         <th>Total</th>
+                         <th></th>
+                         <th>suma</th>
+                      </tr>
+                   </table>";
 
         $message = wordwrap($message, 72);
 
