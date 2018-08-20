@@ -2,15 +2,11 @@
     require_once('common.php');
 
     if (isset($_GET['id'])) {
-        foreach ($_SESSION['cart'] as $key => $value) {
+        $key = array_search($_GET['id'], $_SESSION['cart']);
+        unset($_SESSION['cart'][$key]);
 
-            if ($value == $_GET['id']) {
-                unset($_SESSION['cart'][$key]);
-            }
-
-            header("location: cart.php");
-            die();
-        }
+        header("location: cart.php");
+        die();
     }
 
     if (count($_SESSION['cart'])) {
