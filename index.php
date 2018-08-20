@@ -46,9 +46,7 @@
     <table>
         <?php foreach($result as $row): ?>
             <tr>
-                <td>
-                    <img src="images/<?= $row['image']; ?>">
-                </td>
+                <td><img src="images/<?= $row['image']; ?>"></td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <p><?= $row['title']; ?></p>
@@ -59,9 +57,7 @@
                     </p>
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <a href="?id=<?= $row['id']; ?>"><?= translate("ADD"); ?></a>
-                </td>
+                <td><a href="?id=<?= $row['id']; ?>"><?= translate("ADD"); ?></a></td>
             </tr>
         <?php endforeach; ?>
     </table>
