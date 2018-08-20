@@ -6,3 +6,8 @@ body {
 img {
     width: 15rem;
 }
+
+input, textarea {
+    display: block;
+    margin: 1em;
+}
