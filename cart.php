@@ -40,6 +40,58 @@
         $result = array();
     }
 
+
+/*------------------email--------------------*/
+
+    if (isset($_POST['checkout'])) {
+
+        $to = htmlspecialchars($_POST["email"]);
+        $name = htmlspecialchars($_POST["name"]);
+
+        $subject = "Order confirmation | Shop vanilla";
+
+        $message = "
+                <h1>Hello," . $name . "</h1>
+                <h5>Thank you for buying from us.</h5>
+                
+                <p>Here are your order details: </p>
+                
+                <table>
+                <tr>
+                    <th>NO.</th>
+                    <th>PRODUCT NAME</th>
+                    <th>PRICE</th>
+                </tr>";
+
+        foreach ($result as $row):
+
+            $message .= "<tr>
+                                    <td><p>" . $row['id'] . "</p></td>
+                                    <td><p>" . $row['title'] . "</p></td>
+                                    <td><p>$" . $row['price'] . "</p></td>
+                                 </tr>";
+
+        endforeach;
+
+        $message .= "<tr>
+                                <th>Total</th>
+                                <th></th>
+                                <th>suma</th>
+                            </tr>
+                          </table>";
+
+        $message = wordwrap($message, 72);
+
+        $header = "MIME-Version 1.0\r\n";
+        $header .= "Content-type: text/plain; charset:iso-8859-1\r\n";
+        $header .= "From: " . EMAIL . "\r\n";
+        $header .= "Date: " . date("r (T)") . "\r\n";
+        $header .= "X-Priority: 1\r\n"; //into inbox
+
+        //send mail
+        mail($to, $subject, $message, $header);
+    }
+
 ?>
 
 <?php require_once ('inc/header.php'); ?>
