@@ -46,6 +46,7 @@
     if (isset($_POST['checkout'])) {
 
         $to = htmlspecialchars($_POST["email"]);
+        echo $to;
         $name = htmlspecialchars($_POST["name"]);
 
         $subject = "Order confirmation | Shop vanilla";
@@ -58,26 +59,27 @@
                 
                 <table>
                     <tr>
-                        <th>NO.</th>
-                        <th>PRODUCT NAME</th>
-                        <th>PRICE</th>
+                        <th>". translate("NO.") ."</th>
+                        <th>". translate("PRODUCT NAME") ."</th>
+                        <th>". translate("PRICE") ."</th>
                     </tr>";
+
 
         foreach ($result as $row):
 
             $message .= "<tr>
                              <td><p>" . $row['id'] . "</p></td>
                              <td><p>" . $row['title'] . "</p></td>
-                             <td><p>$" . $row['price'] . "</p></td>
+                             <td><p>" . translate("$") . $row['price'] . "</p></td>
                          </tr>";
 
         endforeach;
 
         $message .= "<tr>
-                         <th>Total</th>
+                         <th>" . translate("Total") . "</th>
                          <th></th>
-                         <th>suma</th>
-                      </tr>
+                         <th>" . translate("$") . $sum . "</th>
+                     </tr>
                    </table>";
 
         $message = wordwrap($message, 72);
@@ -87,6 +89,7 @@
         $header .= "From: " . EMAIL . "\r\n";
         $header .= "Date: " . date("r (T)") . "\r\n";
         $header .= "X-Priority: 1\r\n"; //into inbox
+
 
         //send mail
         mail($to, $subject, $message, $header);
