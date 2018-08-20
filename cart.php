@@ -37,11 +37,12 @@
 
 
 /*------------------email--------------------*/
-
+    $err = "";
     if (isset($_POST['checkout'])) {
 
         $email = htmlspecialchars($_POST["email"]);
         $name = htmlspecialchars($_POST["name"]);
+
 
         $subject = "Order confirmation | Shop vanilla";
 
@@ -58,8 +59,9 @@
                         <th>" . translate("PRICE") . "</th>
                     </tr>";
 
-
+        $sum = 0;
         foreach ($result as $row):
+            $sum += $row['price'];
 
             $message .= "<tr>
                              <td><p>" . $row['id'] . "</p></td>
@@ -84,10 +86,23 @@
         $header .= "Date: " . date("r (T)") . "\r\n";
         $header .= "X-Priority: 1\r\n"; //into inbox
 
+        if (empty($email) || empty($name)) {
+            $err = "All fields required!";
+        } else {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $err = "Invalid email format!";
+            }
+            elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+                $err = "Only letters and white spaces allowed!";
+            } else {
+                //send mail
+                mail($email, $subject, $message, $header);
+                $success = "Order sent!";
+            }
+        }
 
-        //send mail
-        mail($email, $subject, $message, $header);
-    }
+
+}
 
 ?>
 
@@ -121,7 +136,8 @@
         <input type="text" name="email" placeholder="<?= translate("Email");?>">
         <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"></textarea>
 
-        <input type="submit" value="<?= translate("Checkout");?>">
+        <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
+        <p><?= $err; ?></p>
     </form>
 
 <?php require_once ('inc/footer.php'); ?>
