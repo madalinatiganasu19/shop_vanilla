@@ -35,7 +35,6 @@
         $result = array();
     }
 
-
 /*------------------email--------------------*/
     $err = "";
     if (isset($_POST['checkout'])) {
@@ -43,14 +42,13 @@
         $email = htmlspecialchars($_POST["email"]);
         $name = htmlspecialchars($_POST["name"]);
 
-
-        $subject = "Order confirmation | Shop vanilla";
+        $subject = translate("Order confirmation | Shop vanilla");
 
         $message = "
-                <h1>Hello," . $name . "</h1>
-                <h5>Thank you for buying from us.</h5>
+                <h1>" . translate("Hello") . "," . $name . "</h1>
+                <h5>" . traslate("Thank you for buying from us.") . "</h5>
                 
-                <p>Here are your order details: </p>
+                <p>" . translate("Here are your order details:") . "</p>
                 
                 <table>
                     <tr>
@@ -100,9 +98,7 @@
                 $success = "Order sent!";
             }
         }
-
-
-}
+    }
 
 ?>
 
