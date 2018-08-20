@@ -46,7 +46,7 @@
 
         $message = "
                 <h1>" . translate("Hello") . "," . $name . "</h1>
-                <h5>" . traslate("Thank you for buying from us.") . "</h5>
+                <h5>" . translate("Thank you for buying from us.") . "</h5>
                 
                 <p>" . translate("Here are your order details:") . "</p>
                 
