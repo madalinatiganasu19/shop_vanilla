@@ -10,24 +10,19 @@
     }
 
     if (count($_SESSION['cart'])) {
-        $cart = array();
-
-        foreach ($_SESSION['cart'] as $key => $value) {
-            $cart[] = $value;
-        }
 
         $params = [];
-        foreach ($cart as $key => $value) {
-            $params[] = &$cart[$key];
+        foreach ($_SESSION['cart'] as $key => $value) {
+            $params[] = &$_SESSION['cart'][$key];
         }
 
-        $sql = "SELECT * FROM products WHERE id IN(" . implode(', ', array_fill(0, count($cart), '?')) . ");";
+        $sql = "SELECT * FROM products WHERE id IN(" . implode(', ', array_fill(0, count($_SESSION['cart']), '?')) . ");";
         $stmt = $db->prepare($sql);
 
         call_user_func_array(
             'mysqli_stmt_bind_param',
             array_merge(
-                array($stmt, str_repeat('i', count($cart))),
+                array($stmt, str_repeat('i', count($_SESSION['cart']))),
                 $params
             )
         );
@@ -45,8 +40,7 @@
 
     if (isset($_POST['checkout'])) {
 
-        $to = htmlspecialchars($_POST["email"]);
-        echo $to;
+        $email = htmlspecialchars($_POST["email"]);
         $name = htmlspecialchars($_POST["name"]);
 
         $subject = "Order confirmation | Shop vanilla";
@@ -59,9 +53,9 @@
                 
                 <table>
                     <tr>
-                        <th>". translate("NO.") ."</th>
-                        <th>". translate("PRODUCT NAME") ."</th>
-                        <th>". translate("PRICE") ."</th>
+                        <th>" . translate("NO.") . "</th>
+                        <th>" . translate("PRODUCT NAME") . "</th>
+                        <th>" . translate("PRICE") . "</th>
                     </tr>";
 
 
@@ -92,7 +86,7 @@
 
 
         //send mail
-        mail($to, $subject, $message, $header);
+        mail($email, $subject, $message, $header);
     }
 
 ?>

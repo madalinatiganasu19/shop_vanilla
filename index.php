@@ -9,24 +9,19 @@
     }
 
     if (count($_SESSION['cart'])) {
-        $cart = array();
-
-        foreach ($_SESSION['cart'] as $key => $value) {
-            $cart[] = $value;
-        }
 
         $params = [];
-        foreach ($cart as $key => $value) {
-            $params[] = &$cart[$key];
+        foreach ($_SESSION['cart'] as $key => $value) {
+            $params[] = &$_SESSION['cart'][$key];
         }
 
-        $sql = "SELECT * FROM products WHERE id NOT IN(" . implode(', ', array_fill(0, count($cart), '?')) . ");";
+        $sql = "SELECT * FROM products WHERE id NOT IN(" . implode(', ', array_fill(0, count($_SESSION['cart']), '?')) . ");";
         $stmt = $db->prepare($sql);
 
         call_user_func_array(
             'mysqli_stmt_bind_param',
             array_merge(
-                array($stmt, str_repeat('i', count($cart))),
+                array($stmt, str_repeat('i', count($_SESSION['cart']))),
                 $params
             )
         );
