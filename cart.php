@@ -1,10 +1,6 @@
 <?php
     require_once('common.php');
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-
     if (isset($_GET['id'])) {
         foreach ($_SESSION['cart'] as $key => $value) {
 
@@ -61,7 +57,8 @@
                 <td>
                     <p><?= $row['title']; ?></p>
                     <p><?= $row['description']; ?></p>
-                    <p><?= translate("$"); ?>
+                    <p>
+                       <?= translate("$"); ?>
                        <?= $row['price']; ?>
                     </p>
                 </td>
