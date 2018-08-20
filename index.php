@@ -57,7 +57,8 @@
                 <td>
                     <p><?= $row['title']; ?></p>
                     <p><?= $row['description']; ?></p>
-                    <p>$<?= $row['price']; ?></p>
+                    <p><?= translate("$"); ?>
+                       <?= $row['price']; ?></p>
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
