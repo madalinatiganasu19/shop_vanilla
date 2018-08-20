@@ -77,6 +77,9 @@
     <form method="POST" action="">
         <input type="text" name="name" placeholder="Name">
         <input type="text" name="email" placeholder="Email">
+        <textarea cols="20" rows="5" name="comments" placeholder="Comments"></textarea>
+
+        <input type="submit" value="<?= translate("Checkout");?>">
     </form>
 
 <?php require_once ('inc/footer.php'); ?>
