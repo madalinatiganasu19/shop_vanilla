@@ -133,7 +133,7 @@
         <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"></textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
-        <p><?= $err; ?></p>
+        <p><?= translate("$err"); ?></p>
     </form>
 
 <?php require_once ('inc/footer.php'); ?>
