@@ -1,38 +1,54 @@
 <?php
+require_once("common.php");
 
-    require_once("common.php");
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
+if (isset($_GET['id'])) {
+    array_push($_SESSION['cart'], $_GET['id']);
+
+    header("location: /"); // redirect to remove the GET parameter
+    die();
+}
+
+if (count($_SESSION['cart'])) {
+    $cart = array();
+
+    foreach ($_SESSION['cart'] as $key => $value) {
+        $cart[] = $value;
     }
 
-    if (isset($_GET['add'])) {
-        array_push($_SESSION['cart'], $_GET['add']);
-
-        header("location: /"); // redirect to remove the GET parameter
-        die();
+    $params = [];
+    foreach ($cart as $key => $value) {
+        $params[] = &$cart[$key];
     }
 
-    if (count($_SESSION['cart'])) {
-        $cart = array();
+    $sql = "SELECT * FROM products WHERE id NOT IN(" . implode(', ', array_fill(0, count($cart), '?')) . ");";
+    $stmt = $db->prepare($sql);
 
-        foreach ($_SESSION['cart'] as $key => $value) {
-            $cart[] = $value;
-        }
+    call_user_func_array(
+        'mysqli_stmt_bind_param',
+        array_merge(
+            array($stmt, str_repeat('i', count($cart))),
+            $params
+        )
+    );
 
-        $sql = "SELECT * FROM products WHERE id NOT IN(" . implode(', ', $cart) . ");";
-    } else {
-        $sql = "SELECT * FROM products;";
-    }
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $rows = $db->query($sql);
+} else {
+    $sql = "SELECT * FROM products";
+    $result = $db->query($sql);
+}
 
 ?>
 
 <?php require_once('inc/header.php'); ?>
 
     <table>
-        <?php foreach ($rows as $row) : ?>
+        <?php while($row = $result->fetch_assoc()): ?>
             <tr>
                 <td>
                     <img src="images/<?= $row['image']; ?>">
@@ -45,10 +61,10 @@
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
-                    <a href="?add=<?= $row['id']; ?>"><?= translate("ADD"); ?></a>
+                    <a href="?id=<?= $row['id']; ?>"><?= translate("ADD"); ?></a>
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <?php endwhile; ?>
     </table>
 
     <a href="cart.php"><?= translate("Go to cart"); ?></a>
