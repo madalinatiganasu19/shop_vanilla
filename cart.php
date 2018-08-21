@@ -68,8 +68,7 @@
                         <th>" . translate("PRICE") . "</th>
                     </tr>";
 
-        $sum = 0;
-        $no = 0;
+        $sum = $no = 0;
         foreach ($result as $row):
             $sum += $row['price'];
 
@@ -143,9 +142,9 @@
     <a href="/"><?= translate("Go to index"); ?></a>
 
     <form method="POST" action="">
-        <input type="text" name="name" placeholder="<?= translate("Name");?>">
-        <input type="text" name="email" placeholder="<?= translate("Email");?>">
-        <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"></textarea>
+        <input type="text" name="name" placeholder="<?= translate("Name");?>" value="<?= isset($_POST["checkout"]) ? $_POST["name"] : ""; ?>">
+        <input type="text" name="email" placeholder="<?= translate("Email");?>" value="<?= isset($_POST["checkout"]) ? $_POST["email"] : ""; ?>">
+        <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"> <?= isset($_POST["checkout"]) ? $_POST["comments"] : ""; ?> </textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
         <p><?= empty($err) ? $success : $err; ?></p>
