@@ -5,6 +5,8 @@
 
     $db = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 
+    $err = "";
+
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
     }
