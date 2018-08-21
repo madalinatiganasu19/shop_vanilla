@@ -1,7 +1,6 @@
 <?php
     require_once('common.php');
 
-    $err = "";
     if (isset($_POST['login'])) {
 
         $email = validate($_POST['email']);

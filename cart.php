@@ -37,8 +37,6 @@
 
 /*------------------email--------------------*/
 
-    $err = "";
-
     if (isset($_POST['checkout']) && count($_SESSION['cart'])) {
 
         $email = validate($_POST["email"]);
