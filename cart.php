@@ -121,6 +121,9 @@
 
 <?php require_once('inc/header.php'); ?>
 
+
+    <a class="auth" href="login.php"><?= translate("Login"); ?></a>
+
     <table>
         <?php foreach($result as $row) : ?>
 
