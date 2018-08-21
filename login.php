@@ -1,6 +1,16 @@
 <?php
     require_once('common.php');
 
+    $err = "";
+    if (isset($_POST['login'])) {
+
+        $email = validate($_POST['email']);
+        $password = validate($_POST['password']);
+
+        if (empty($email) || empty($password) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $err = translate("Invalid credentials");
+        }
+    }
 ?>
 
 <?php require_once("inc/header.php"); ?>
