@@ -111,7 +111,6 @@
                 //send mail
                 mail($email, $subject, $message, $header);
                 $success = translate("Order sent!");
-                echo $message;
             }
         }
     }
