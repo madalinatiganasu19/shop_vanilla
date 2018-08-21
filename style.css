@@ -11,3 +11,8 @@ input, textarea {
     display: block;
     margin: 1em;
 }
+
+.auth {
+    float: right;
+    margin-right: 2em;
+}
