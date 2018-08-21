@@ -6,3 +6,4 @@
     define("DATABASE", "");
 
     define("EMAIL", "");
+    define("ADMIN_PASSWORD", "");
