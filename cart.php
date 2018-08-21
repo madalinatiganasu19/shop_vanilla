@@ -39,10 +39,11 @@
 
     $err = $success = "";
 
-    if (isset($_POST['checkout'])) {
+    if (isset($_POST['checkout']) && count($_SESSION['cart'])) {
 
-        $email = htmlspecialchars($_POST["email"]);
-        $name = htmlspecialchars($_POST["name"]);
+        $email = validate($_POST["email"]);
+        $name = validate($_POST["name"]);
+        $comments = validate($_POST["comments"]);
 
         $subject = translate("Order confirmation | Shop vanilla");
 
@@ -53,7 +54,7 @@
         $header .= "X-Priority: 1\r\n"; //into inbox
 
         $message = "
-                <h1>" . translate("Hello") . "," . $name . "</h1>
+                <h1>" . translate("Hello ") . $name . ",</h1>
                 <h5>" . translate("Thank you for buying from us.") . "</h5>
                 
                 <p>" . translate("Here are your order details:") . "</p>
@@ -86,13 +87,15 @@
         endforeach;
 
         $message .= "<tr>
-                         <th>" . translate("Total") . "</th>
+                         <th>" . translate("TOTAL") . "</th>
                          <th></th>
                          <th></th>
                          <th></th>
                          <th>" . translate("$") . $sum . "</th>
                      </tr>
                  </table>";
+
+        $message .= translate("OBSERVATIONS: ") . translate($comments);
 
         $message = wordwrap($message, 72);
 
@@ -108,6 +111,7 @@
                 //send mail
                 mail($email, $subject, $message, $header);
                 $success = translate("Order sent!");
+                echo $message;
             }
         }
     }
