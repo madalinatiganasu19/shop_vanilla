@@ -8,6 +8,13 @@
 
         if (empty($email) || empty($password) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $err = translate("Invalid credentials");
+
+        } elseif ($email == EMAIL && $password == ADMIN_PASSWORD) {
+            header("location: products.php");
+            die();
+
+        } else {
+            $err = translate("Invalid credentials");
         }
     }
 ?>
@@ -21,5 +28,7 @@
         <input type="submit" name="login" value="<?= translate("Login"); ?>">
         <p><?= $err; ?></p>
     </form>
+
+    <a href="/"><?= translate("Go to index"); ?></a>
 
 <?php require_once("inc/footer.php"); ?>
