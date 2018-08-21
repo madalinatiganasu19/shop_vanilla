@@ -36,13 +36,21 @@
     }
 
 /*------------------email--------------------*/
-    $err = "";
+
+    $err = $success = "";
+
     if (isset($_POST['checkout'])) {
 
         $email = htmlspecialchars($_POST["email"]);
         $name = htmlspecialchars($_POST["name"]);
 
         $subject = translate("Order confirmation | Shop vanilla");
+
+        $header = "MIME-Version 1.0\r\n";
+        $header .= "Content-type: text/plain; charset:iso-8859-1\r\n";
+        $header .= "From: " . EMAIL . "\r\n";
+        $header .= "Date: " . date("r (T)") . "\r\n";
+        $header .= "X-Priority: 1\r\n"; //into inbox
 
         $message = "
                 <h1>" . translate("Hello") . "," . $name . "</h1>
@@ -53,17 +61,25 @@
                 <table>
                     <tr>
                         <th>" . translate("NO.") . "</th>
-                        <th>" . translate("PRODUCT NAME") . "</th>
+                        <th></th>
+                        <th>" . translate("PRODUCT DETAILS") . "</th>
+                        <th></th>
                         <th>" . translate("PRICE") . "</th>
                     </tr>";
 
         $sum = 0;
+        $no = 0;
         foreach ($result as $row):
             $sum += $row['price'];
 
             $message .= "<tr>
-                             <td><p>" . $row['id'] . "</p></td>
-                             <td><p>" . $row['title'] . "</p></td>
+                             <td><p>" . ++$no . "</p></td>
+                             <td><img src='images/" . $row['image'] . "'></td>
+                             <td>
+                                 <p>" . $row['title'] . "</p>
+                                 <p>" . $row['description'] . "</p>
+                             </td>
+                             <td></td>
                              <td><p>" . translate("$") . $row['price'] . "</p></td>
                          </tr>";
 
@@ -72,17 +88,13 @@
         $message .= "<tr>
                          <th>" . translate("Total") . "</th>
                          <th></th>
+                         <th></th>
+                         <th></th>
                          <th>" . translate("$") . $sum . "</th>
                      </tr>
-                   </table>";
+                 </table>";
 
         $message = wordwrap($message, 72);
-
-        $header = "MIME-Version 1.0\r\n";
-        $header .= "Content-type: text/plain; charset:iso-8859-1\r\n";
-        $header .= "From: " . EMAIL . "\r\n";
-        $header .= "Date: " . date("r (T)") . "\r\n";
-        $header .= "X-Priority: 1\r\n"; //into inbox
 
         if (empty($email) || empty($name)) {
             $err = translate("All fields required!");
@@ -133,7 +145,7 @@
         <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"></textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
-        <p><?= translate($err); ?></p>
+        <p><?= empty($err) ? $success : $err; ?></p>
     </form>
 
 <?php require_once('inc/footer.php'); ?>
