@@ -105,7 +105,7 @@
                      </tr>
                  </table>";
 
-        $message .= translate("OBSERVATIONS: ") . translate($comments);
+        $message .= translate("OBSERVATIONS: " . $comments);
 
         $message = wordwrap($message, 72);
 
