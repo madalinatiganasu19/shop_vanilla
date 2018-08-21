@@ -37,13 +37,24 @@
 
 /*------------------email--------------------*/
 
-    $err = $success = "";
+    $err = "";
 
     if (isset($_POST['checkout']) && count($_SESSION['cart'])) {
 
         $email = validate($_POST["email"]);
         $name = validate($_POST["name"]);
         $comments = validate($_POST["comments"]);
+
+
+        if (empty($email) || empty($name)) {
+            $err = translate("All fields required!");
+        } else {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $err = translate("Invalid email format!");
+            } elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+                $err = translate("Only letters and white spaces allowed!");
+            }
+        }
 
         $subject = translate("Order confirmation | Shop vanilla");
 
@@ -98,19 +109,13 @@
 
         $message = wordwrap($message, 72);
 
-        if (empty($email) || empty($name)) {
-            $err = translate("All fields required!");
-        } else {
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $err = translate("Invalid email format!");
-            }
-            elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-                $err = translate("Only letters and white spaces allowed!");
-            } else {
-                //send mail
-                mail($email, $subject, $message, $header);
-                $success = translate("Order sent!");
-            }
+        if (empty($err)) {
+            //send mail
+            mail($email, $subject, $message, $header);
+
+            session_destroy();
+            header("location: /");
+            die();
         }
     }
 
@@ -147,7 +152,7 @@
         <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"> <?= isset($_POST["checkout"]) ? $_POST["comments"] : ""; ?> </textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
-        <p><?= empty($err) ? $success : $err; ?></p>
+        <p><?= $err; ?></p>
     </form>
 
 <?php require_once('inc/footer.php'); ?>
