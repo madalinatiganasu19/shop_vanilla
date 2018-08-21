@@ -85,24 +85,24 @@
         $header .= "X-Priority: 1\r\n"; //into inbox
 
         if (empty($email) || empty($name)) {
-            $err = "All fields required!";
+            $err = translate("All fields required!");
         } else {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $err = "Invalid email format!";
+                $err = translate("Invalid email format!");
             }
             elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-                $err = "Only letters and white spaces allowed!";
+                $err = translate("Only letters and white spaces allowed!");
             } else {
                 //send mail
                 mail($email, $subject, $message, $header);
-                $success = "Order sent!";
+                $success = translate("Order sent!");
             }
         }
     }
 
 ?>
 
-<?php require_once ('inc/header.php'); ?>
+<?php require_once('inc/header.php'); ?>
 
     <table>
         <?php foreach($result as $row) : ?>
@@ -133,8 +133,8 @@
         <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"></textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
-        <p><?= translate("$err"); ?></p>
+        <p><?= translate($err); ?></p>
     </form>
 
-<?php require_once ('inc/footer.php'); ?>
+<?php require_once('inc/footer.php'); ?>
 

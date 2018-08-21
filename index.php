@@ -59,4 +59,4 @@
 
     <a href="cart.php"><?= translate("Go to cart"); ?></a>
 
-<?php require_once ('inc/footer.php'); ?>
+<?php require_once('inc/footer.php'); ?>
