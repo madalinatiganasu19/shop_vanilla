@@ -3,8 +3,8 @@
 
     if (isset($_POST['login'])) {
 
-        $email = validate($_POST['email']);
-        $password = validate($_POST['password']);
+        $email = sanitize($_POST['email']);
+        $password = sanitize($_POST['password']);
 
         if (empty($email) || empty($password) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $err = translate("Invalid credentials");
@@ -21,9 +21,9 @@
 
 <?php require_once("inc/header.php"); ?>
 
-    <form action="" method="POST">
-        <input type="text" name="email" placeholder="<?= translate("Email"); ?>" value="<?= isset($_POST["login"]) ? $_POST["email"] : ""; ?>">
-        <input type="password" name="password" placeholder="<?= translate("Password"); ?>">
+    <form method="POST">
+        <input type="text" name="email" placeholder="<?= translate("Email"); ?>" value="<?= isset($_POST["login"]) ? htmlspecialchars($_POST["email"]) : ""; ?>">
+        <input type="password" name="password" placeholder="<?= translate("Password"); ?>" value="<?= isset($_POST["login"]) ? htmlspecialchars($_POST["password"]) : ""; ?>">
 
         <input type="submit" name="login" value="<?= translate("Login"); ?>">
         <p><?= $err; ?></p>
