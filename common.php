@@ -6,6 +6,7 @@
     $db = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 
     $err = "";
+    $errors[] = array();
 
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
@@ -16,12 +17,10 @@
         return $word;
     }
 
-    function validate($input) {
+    function sanitize($input) {
 
         $input = trim($input);
         $input = strip_tags($input);
-        $input = htmlspecialchars($input);
 
         return $input;
-
     }
