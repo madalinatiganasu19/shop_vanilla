@@ -37,6 +37,7 @@
 
 /*------------------email--------------------*/
 
+
     if (isset($_POST['checkout']) && count($_SESSION['cart'])) {
 
         $email = sanitize($_POST["email"]);
@@ -59,11 +60,9 @@
 
             $subject = translate("Order confirmation | Shop vanilla");
 
-            $header = "MIME-Version 1.0\r\n";
-            $header .= "Content-type: text/plain; charset:iso-8859-1\r\n";
-            $header .= "From: " . EMAIL . "\r\n";
-            $header .= "Date: " . date("r (T)") . "\r\n";
-            $header .= "X-Priority: 1\r\n"; //into inbox
+            $header = "MIME-Version:1.0" . "\r\n";
+            $header .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $header .= "From:" . EMAIL . "\r\n";
 
             $message = "
                     <h1>" . translate("Hello ") . $name . ",</h1>
@@ -86,10 +85,10 @@
 
                 $message .= "<tr>
                                  <td><p>" . ++$no . "</p></td>
-                                 <td><img src='images/" . $row['image'] . "'></td>
+                                 <td><img src='" . parse_url($_SERVER['HTTP_REFERER'], PHP_URL_SCHEME) . "://" . $_SERVER["HTTP_HOST"] . "/images/" . $row['image'] . "' width='100em'></td>
                                  <td>
                                      <p>" . $row['title'] . "</p>
-                                     <p>" . $row['description'] . "</p>
+                                     <p>" . wordwrap($row['description'],50,"<br>\n",TRUE) . "</p>
                                  </td>
                                  <td></td>
                                  <td><p>" . translate("$") . $row['price'] . "</p></td>
@@ -131,7 +130,7 @@
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <p><?= $row['title']; ?></p>
-                    <p><?= $row['description']; ?></p>
+                    <p><?= wordwrap($row['description'],50,"<br>\n",TRUE); ?></p>
                     <p>
                        <?= translate("$"); ?>
                        <?= $row['price']; ?>
