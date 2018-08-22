@@ -39,13 +39,14 @@
 
     if (isset($_POST['checkout']) && count($_SESSION['cart'])) {
 
-        $email = validate($_POST["email"]);
-        $name = validate($_POST["name"]);
-        $comments = validate($_POST["comments"]);
+        $email = sanitize($_POST["email"]);
+        $name = sanitize($_POST["name"]);
+        $comments = sanitize($_POST["comments"]);
 
 
         if (empty($email) || empty($name)) {
-            $err = translate("All fields required!");
+            $err = translate("Name and email required!");
+
         } else {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $err = translate("Invalid email format!");
@@ -54,60 +55,58 @@
             }
         }
 
-        $subject = translate("Order confirmation | Shop vanilla");
+        if (empty($err)) {
 
-        $header = "MIME-Version 1.0\r\n";
-        $header .= "Content-type: text/plain; charset:iso-8859-1\r\n";
-        $header .= "From: " . EMAIL . "\r\n";
-        $header .= "Date: " . date("r (T)") . "\r\n";
-        $header .= "X-Priority: 1\r\n"; //into inbox
+            $subject = translate("Order confirmation | Shop vanilla");
 
-        $message = "
-                <h1>" . translate("Hello ") . $name . ",</h1>
-                <h5>" . translate("Thank you for buying from us.") . "</h5>
-                
-                <p>" . translate("Here are your order details:") . "</p>
-                
-                <table>
-                    <tr>
-                        <th>" . translate("NO.") . "</th>
-                        <th></th>
-                        <th>" . translate("PRODUCT DETAILS") . "</th>
-                        <th></th>
-                        <th>" . translate("PRICE") . "</th>
-                    </tr>";
+            $header = "MIME-Version 1.0\r\n";
+            $header .= "Content-type: text/plain; charset:iso-8859-1\r\n";
+            $header .= "From: " . EMAIL . "\r\n";
+            $header .= "Date: " . date("r (T)") . "\r\n";
+            $header .= "X-Priority: 1\r\n"; //into inbox
 
-        $sum = $no = 0;
-        foreach ($result as $row):
-            $sum += $row['price'];
+            $message = "
+                    <h1>" . translate("Hello ") . $name . ",</h1>
+                    <h5>" . translate("Thank you for buying from us.") . "</h5>
+                    
+                    <p>" . translate("Here are your order details:") . "</p>
+                    
+                    <table>
+                        <tr>
+                            <th>" . translate("NO.") . "</th>
+                            <th></th>
+                            <th>" . translate("PRODUCT DETAILS") . "</th>
+                            <th></th>
+                            <th>" . translate("PRICE") . "</th>
+                        </tr>";
+
+            $sum = $no = 0;
+            foreach ($result as $row) {
+                $sum += $row['price'];
+
+                $message .= "<tr>
+                                 <td><p>" . ++$no . "</p></td>
+                                 <td><img src='images/" . $row['image'] . "'></td>
+                                 <td>
+                                     <p>" . $row['title'] . "</p>
+                                     <p>" . $row['description'] . "</p>
+                                 </td>
+                                 <td></td>
+                                 <td><p>" . translate("$") . $row['price'] . "</p></td>
+                             </tr>";
+            }
 
             $message .= "<tr>
-                             <td><p>" . ++$no . "</p></td>
-                             <td><img src='images/" . $row['image'] . "'></td>
-                             <td>
-                                 <p>" . $row['title'] . "</p>
-                                 <p>" . $row['description'] . "</p>
-                             </td>
-                             <td></td>
-                             <td><p>" . translate("$") . $row['price'] . "</p></td>
-                         </tr>";
+                             <th>" . translate("TOTAL") . "</th>
+                             <th></th>
+                             <th></th>
+                             <th></th>
+                             <th>" . translate("$") . $sum . "</th>
+                         </tr>
+                     </table>";
 
-        endforeach;
+            $message .= translate("OBSERVATIONS: " . $comments);
 
-        $message .= "<tr>
-                         <th>" . translate("TOTAL") . "</th>
-                         <th></th>
-                         <th></th>
-                         <th></th>
-                         <th>" . translate("$") . $sum . "</th>
-                     </tr>
-                 </table>";
-
-        $message .= translate("OBSERVATIONS: " . $comments);
-
-        $message = wordwrap($message, 72);
-
-        if (empty($err)) {
             //send mail
             mail($email, $subject, $message, $header);
 
@@ -147,10 +146,10 @@
 
     <a href="/"><?= translate("Go to index"); ?></a>
 
-    <form method="POST" action="">
-        <input type="text" name="name" placeholder="<?= translate("Name");?>" value="<?= isset($_POST["checkout"]) ? $_POST["name"] : ""; ?>">
-        <input type="text" name="email" placeholder="<?= translate("Email");?>" value="<?= isset($_POST["checkout"]) ? $_POST["email"] : ""; ?>">
-        <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"> <?= isset($_POST["checkout"]) ? $_POST["comments"] : ""; ?> </textarea>
+    <form method="POST">
+        <input type="text" name="name" placeholder="<?= translate("Name");?>" value="<?= isset($_POST["checkout"]) ? htmlspecialchars($_POST["name"]) : ""; ?>">
+        <input type="text" name="email" placeholder="<?= translate("Email");?>" value="<?= isset($_POST["checkout"]) ? htmlspecialchars($_POST["email"]) : ""; ?>">
+        <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"><?= isset($_POST["checkout"]) ? htmlspecialchars($_POST["comments"]) : ""; ?></textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
         <p><?= $err; ?></p>
