@@ -7,12 +7,15 @@
     if (isset($_GET['id'])) {
 
         $id = $_GET['id'];
+        $image = $_GET['image'];
 
         $stmt = "DELETE FROM products WHERE id = ?";
 
         $stmt = $db->prepare($stmt);
         $stmt->bind_param('i', $id);
         $stmt->execute();
+
+        unlink("images/" . $image);
 
         header("location: products.php");
         die();
@@ -42,7 +45,7 @@
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <p><a href="product.php?id=<?= $row['id']; ?>"><?= translate("UPDATE"); ?></a></p>
-                    <p><a href="?id=<?= $row['id']; ?>"><?= translate("DELETE"); ?></a></p>
+                    <p><a href="?id=<?= $row['id']; ?>&image=<?= $row['image']; ;?>"><?= translate("DELETE"); ?></a></p>
                 </td>
             </tr>
         <?php endforeach; ?>
