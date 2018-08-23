@@ -1,7 +1,38 @@
 <?php
     require_once("common.php");
 
+    if (isset($_GET['id'])) {
+        //update existing product
+
+
+    } else {
+        //add new product
+        if (isset($_POST['save'])) {
+
+
+            $title = sanitize($_POST["title"]);
+            $description = sanitize($_POST["description"]);
+            $price = sanitize($_POST["price"]);
+
+            if (empty($title) || empty($description) || empty($price)) {
+                $err = translate("All fields required!");
+            }
+
+            if (empty($err)) {
+
+                $stmt2 = "INSERT INTO products (title, description, price) VALUES (?,?,?)";
+
+                $stmt2 = $db->prepare($stmt2);
+                $stmt2->bind_param('ssd', $title, $description, $price);
+                $stmt2->execute();
+
+                header("location: products.php");
+                die();
+            }
+        }
+    }
 ?>
+
 
 <?php require_once("inc/header.php"); ?>
 
