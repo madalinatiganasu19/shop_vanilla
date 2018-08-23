@@ -3,8 +3,40 @@
 
     if (isset($_GET['id'])) {
         //update existing product
+        $id = $_GET['id'];
 
+        $stmt = "SELECT * FROM products WHERE id = ?";
 
+        $stmt = $db->prepare($stmt);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if (isset($_POST['save'])) {
+
+            $title = sanitize($_POST["title"]);
+            $description = sanitize($_POST["description"]);
+            $price = sanitize($_POST["price"]);
+
+            if (empty($title) || empty($description) || empty($price)) {
+                $err = translate("All fields required!");
+            }
+
+            //upload image
+            require_once("inc\upload.php");
+
+            if (empty($err)) {
+                $stmt2 = "UPDATE products SET title = ?, description = ?, price = ?, image = ? WHERE id = ?";
+
+                $stmt2 = $db->prepare($stmt2);
+                $stmt2->bind_param('ssdsi', $title, $description, $price, $image, $id);
+                $stmt2->execute();
+
+                header("location: products.php");
+                die();
+            }
+        }
     } else {
         //add new product
         if (isset($_POST['save'])) {
@@ -18,33 +50,9 @@
             }
 
             //upload image
-            if (isset($_FILES["image"])) {
+            require_once("inc/upload.php");
 
-                $upload_dir = "images/";
-
-                $file_name = $_FILES["image"]["name"];
-                $tmp_name = $_FILES["image"]["tmp_name"];
-                $file = $upload_dir . basename($_FILES["image"]["name"]);
-                $image_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-
-                if (empty($file_name) && empty($_POST['image'])) {
-                    $err = translate("All fields required!");
-                }
-
-                if (empty($err) && !empty($file_name)) {
-                    if ($image_ext != "jpg" && $image_ext != "jpeg" && $image_ext != "png") {
-                        $err = translate("Only .jpg, .jpeg, .png files allowed!");
-                    } elseif (file_exists($file)) {
-                        $err = translate("This file already exists!");
-                    }
-                }
-            }
-
-            if (empty($err) && isset($_FILES['image'])) {
-                if (move_uploaded_file($tmp_name, $upload_dir . $file_name)) {
-                    $image = $file_name;
-                }
-
+            if (empty($err)) {
                 $stmt2 = "INSERT INTO products (title, description, price, image) VALUES (?,?,?,?)";
 
                 $stmt2 = $db->prepare($stmt2);
