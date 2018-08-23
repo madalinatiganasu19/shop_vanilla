@@ -4,12 +4,24 @@
     $sql = "SELECT * FROM products";
     $result = $db->query($sql);
 
+    if (isset($_GET['id'])) {
 
+        $id = $_GET['id'];
+
+        $stmt = "DELETE FROM products WHERE id = ?";
+
+        $stmt = $db->prepare($stmt);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+
+        header("location: products.php");
+        die();
+    }
 ?>
 
 <?php require_once("inc/header.php"); ?>
 
-    
+
 
     <table>
         <?php foreach($result as $row): ?>
