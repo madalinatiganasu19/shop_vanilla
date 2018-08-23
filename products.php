@@ -1,6 +1,11 @@
 <?php
     require_once('common.php');
 
+    if (!isset($_SESSION["logged"])) {
+        header("location: login.php");
+        die();
+    }
+
     $sql = "SELECT * FROM products";
     $result = $db->query($sql);
 

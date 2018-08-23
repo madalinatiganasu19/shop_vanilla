@@ -10,6 +10,8 @@
             $err = translate("Invalid credentials");
 
         } elseif ($email == EMAIL && $password == ADMIN_PASSWORD) {
+            $_SESSION["logged"] = true;
+
             header("location: products.php");
             die();
 
