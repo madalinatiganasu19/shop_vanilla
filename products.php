@@ -21,7 +21,10 @@
 
 <?php require_once("inc/header.php"); ?>
 
-
+    <div class="auth">
+        <a href="product.php"><?= translate("Add Product"); ?></a>
+        <a href="logout.php"><?= translate("Logout"); ?></a>
+    </div>
 
     <table>
         <?php foreach($result as $row): ?>
