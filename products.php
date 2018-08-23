@@ -36,7 +36,7 @@
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <p><?= $row['title']; ?></p>
-                    <p><?= wordwrap($row['description'],50,"<br>\n",TRUE); ?></p>
+                    <p><?= $row['description']; ?></p>
                     <p>
                         <?= translate("$"); ?>
                         <?= $row['price']; ?>
