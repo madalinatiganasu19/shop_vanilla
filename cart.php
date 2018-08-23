@@ -88,7 +88,7 @@
                                  <td><img src='" . parse_url($_SERVER['HTTP_REFERER'], PHP_URL_SCHEME) . "://" . $_SERVER["HTTP_HOST"] . "/images/" . $row['image'] . "' width='100em'></td>
                                  <td>
                                      <p>" . $row['title'] . "</p>
-                                     <p>" . wordwrap($row['description'],50,"<br>\n",TRUE) . "</p>
+                                     <p>" . $row['description'] . "</p>
                                  </td>
                                  <td></td>
                                  <td><p>" . translate("$") . $row['price'] . "</p></td>
@@ -130,7 +130,7 @@
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <p><?= $row['title']; ?></p>
-                    <p><?= wordwrap($row['description'],50,"<br>\n",TRUE); ?></p>
+                    <p><?= $row['description']; ?></p>
                     <p>
                        <?= translate("$"); ?>
                        <?= $row['price']; ?>
@@ -146,9 +146,9 @@
     <a href="/"><?= translate("Go to index"); ?></a>
 
     <form method="POST">
-        <input type="text" name="name" placeholder="<?= translate("Name");?>" value="<?= isset($_POST["checkout"]) ? htmlspecialchars($_POST["name"]) : ""; ?>">
-        <input type="text" name="email" placeholder="<?= translate("Email");?>" value="<?= isset($_POST["checkout"]) ? htmlspecialchars($_POST["email"]) : ""; ?>">
-        <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"><?= isset($_POST["checkout"]) ? htmlspecialchars($_POST["comments"]) : ""; ?></textarea>
+        <input type="text" name="name" placeholder="<?= translate("Name");?>" value="<?= isset($_POST["checkout"]) ? $_POST["name"] : ""; ?>">
+        <input type="text" name="email" placeholder="<?= translate("Email");?>" value="<?= isset($_POST["checkout"]) ? $_POST["email"] : ""; ?>">
+        <textarea cols="20" rows="5" name="comments" placeholder="<?= translate("Comments");?>"><?= isset($_POST["checkout"]) ? $_POST["comments"] : ""; ?></textarea>
 
         <input type="submit" name="checkout" value="<?= translate("Checkout");?>">
         <p><?= $err; ?></p>
