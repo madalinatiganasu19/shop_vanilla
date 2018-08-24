@@ -5,13 +5,6 @@
         //update existing product
         $id = $_GET['id'];
 
-        $stmt = "SELECT * FROM products WHERE id = ?";
-
-        $stmt = $db->prepare($stmt);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
 
         if (isset($_POST['save'])) {
 
@@ -24,9 +17,10 @@
             }
 
             //upload image
-            require_once("inc\upload.php");
+            upload($image);
 
             if (empty($err)) {
+
                 $stmt2 = "UPDATE products SET title = ?, description = ?, price = ?, image = ? WHERE id = ?";
 
                 $stmt2 = $db->prepare($stmt2);
@@ -36,6 +30,15 @@
                 header("location: products.php");
                 die();
             }
+        } else {
+
+            $stmt = "SELECT * FROM products WHERE id = ?";
+
+            $stmt = $db->prepare($stmt);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
         }
     } else {
         //add new product
@@ -50,9 +53,10 @@
             }
 
             //upload image
-            require_once("inc/upload.php");
+            upload($image);
 
             if (empty($err)) {
+
                 $stmt2 = "INSERT INTO products (title, description, price, image) VALUES (?,?,?,?)";
 
                 $stmt2 = $db->prepare($stmt2);
@@ -72,7 +76,7 @@
         <input type="text" name="title" placeholder="<?= translate("Title"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["title"] : $row["title"]) : (isset($_POST["save"]) ? $_POST["title"] : ""); ?>">
         <textarea cols="20" rows="5" name="description" placeholder="<?= translate("Description"); ?>"><?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["description"] : $row['description']) : (isset($_POST["save"]) ? $_POST["description"] : ""); ?></textarea>
         <input type="text" name="price" placeholder="<?= translate("Price"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["price"] : $row['price']) : (isset($_POST["save"]) ? $_POST["price"] : ""); ?>">
-        <input type="file" name="image" id="image" >
+        <input type="file" name="image" id="image">
 
         <input type="submit" name="save" value="<?= translate("Save"); ?>">
     </form>
