@@ -29,11 +29,11 @@
         header("location: products.php");
         die();
 
-    } else {
-
-        $sql = "SELECT * FROM products";
-        $result = $db->query($sql);
     }
+
+    $sql = "SELECT * FROM products";
+    $result = $db->query($sql);
+
 ?>
 
 <?php require_once("inc/header.php"); ?>
