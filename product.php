@@ -17,7 +17,7 @@
             }
 
             //upload image
-            upload($image);
+            upload($image, $err);
 
             if (empty($err)) {
 
@@ -53,7 +53,7 @@
             }
 
             //upload image
-            upload($image);
+            upload($image, $err);
 
             if (empty($err)) {
 

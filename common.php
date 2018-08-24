@@ -25,7 +25,7 @@
         return $input;
     }
 
-    function upload(&$image) {
+    function upload(&$image, &$err) {
 
         if (isset($_FILES["image"])) {
             $upload_dir = "images/";
