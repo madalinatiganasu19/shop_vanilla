@@ -6,13 +6,17 @@
         die();
     }
 
-    $sql = "SELECT * FROM products";
-    $result = $db->query($sql);
-
     if (isset($_GET['id'])) {
 
         $id = $_GET['id'];
-        $image = $_GET['image'];
+
+        $statement = "SELECT image FROM products WHERE id = ?";
+
+        $statement = $db->prepare($statement);
+        $statement->bind_param('i', $id);
+        $statement->execute();
+        $result = $statement->get_result();
+        $row = $result->fetch_assoc();
 
         $stmt = "DELETE FROM products WHERE id = ?";
 
@@ -20,10 +24,15 @@
         $stmt->bind_param('i', $id);
         $stmt->execute();
 
-        unlink("images/" . $image);
+        unlink("images/" . $row['image']);
 
         header("location: products.php");
         die();
+
+    } else {
+
+        $sql = "SELECT * FROM products";
+        $result = $db->query($sql);
     }
 ?>
 
@@ -50,7 +59,7 @@
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <p><a href="product.php?id=<?= $row['id']; ?>"><?= translate("UPDATE"); ?></a></p>
-                    <p><a href="?id=<?= $row['id']; ?>&image=<?= $row['image']; ;?>"><?= translate("DELETE"); ?></a></p>
+                    <p><a href="?id=<?= $row['id']; ?>"><?= translate("DELETE"); ?></a></p>
                 </td>
             </tr>
         <?php endforeach; ?>
