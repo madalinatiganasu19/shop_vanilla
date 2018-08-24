@@ -25,7 +25,7 @@
         return $input;
     }
 
-    function upload(&$image, &$err) {
+    function validate_and_upload_image(&$image, &$err) {
 
         if (isset($_FILES["image"])) {
             $upload_dir = "images/";
@@ -53,4 +53,16 @@
                 }
             }
         }
+    }
+
+    function validate(&$title, &$description, &$price, &$err) {
+
+        $title = sanitize($_POST["title"]);
+        $description = sanitize($_POST["description"]);
+        $price = sanitize($_POST["price"]);
+
+        if (empty($title) || empty($description) || empty($price)) {
+            $err = translate("All fields required!");
+        }
+
     }

@@ -5,19 +5,13 @@
         //update existing product
         $id = $_GET['id'];
 
-
         if (isset($_POST['save'])) {
 
-            $title = sanitize($_POST["title"]);
-            $description = sanitize($_POST["description"]);
-            $price = sanitize($_POST["price"]);
+            //validate data
+            validate($title, $description, $price, $err);
 
-            if (empty($title) || empty($description) || empty($price)) {
-                $err = translate("All fields required!");
-            }
-
-            //upload image
-            upload($image, $err);
+            //validate & upload image
+            validate_and_upload_image($image, $err);
 
             if (empty($err)) {
 
@@ -44,16 +38,11 @@
         //add new product
         if (isset($_POST['save'])) {
 
-            $title = sanitize($_POST["title"]);
-            $description = sanitize($_POST["description"]);
-            $price = sanitize($_POST["price"]);
+            //validate data
+            validate($title, $description, $price, $err);
 
-            if (empty($title) || empty($description) || empty($price)) {
-                $err = translate("All fields required!");
-            }
-
-            //upload image
-            upload($image, $err);
+            //validate & upload image
+            validate_and_upload_image($image, $err);
 
             if (empty($err)) {
 
@@ -76,6 +65,7 @@
         <input type="text" name="title" placeholder="<?= translate("Title"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["title"] : $row["title"]) : (isset($_POST["save"]) ? $_POST["title"] : ""); ?>">
         <textarea cols="20" rows="5" name="description" placeholder="<?= translate("Description"); ?>"><?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["description"] : $row['description']) : (isset($_POST["save"]) ? $_POST["description"] : ""); ?></textarea>
         <input type="text" name="price" placeholder="<?= translate("Price"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["price"] : $row['price']) : (isset($_POST["save"]) ? $_POST["price"] : ""); ?>">
+
         <input type="file" name="image" id="image">
 
         <input type="submit" name="save" value="<?= translate("Save"); ?>">
