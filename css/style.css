@@ -7,7 +7,7 @@ img {
     width: 15rem;
 }
 
-input, textarea {
+input, textarea, label {
     display: block;
     margin: 1em;
 }
