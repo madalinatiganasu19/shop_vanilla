@@ -73,11 +73,12 @@
         <textarea cols="20" rows="5" name="description" placeholder="<?= translate("Description"); ?>"><?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["description"] : $row['description']) : (isset($_POST["save"]) ? $_POST["description"] : ""); ?></textarea>
         <input type="text" name="price" placeholder="<?= translate("Price"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["price"] : $row['price']) : (isset($_POST["save"]) ? $_POST["price"] : ""); ?>">
 
-        <label for="image"><?=
-                               isset($_GET['id']) ?
-                                   translate("Image: ") . (isset($_POST["save"]) ? $_FILES["image"]["name"] : $row['image']) :
-                                   (isset($_POST["save"]) ? translate("Image: ") . $_FILES["image"]["name"] : "");
-                            ?>
+        <label for="image">
+            <?=
+                isset($_GET['id']) ?
+                    translate("Image: ") . (isset($_POST["save"]) ? $_FILES["image"]["name"] : $row['image']) :
+                    (isset($_POST["save"]) ? translate("Image: ") . $_FILES["image"]["name"] : "");
+            ?>
         </label>
 
         <input type="file" name="image">
