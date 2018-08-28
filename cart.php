@@ -58,6 +58,13 @@
 
         if (empty($err)) {
 
+            //insert order details into database
+            $stmt2 = "INSERT INTO orders(name, email, comment) VALUES (?,?,?)";
+            $stmt2 = $db->prepare($stmt2);
+            $stmt2->bind_param('sss', $name, $email, $comments);
+            $stmt2->execute();
+
+            //create email
             $subject = translate("Order confirmation | Shop vanilla");
 
             $header = "MIME-Version:1.0" . "\r\n";
