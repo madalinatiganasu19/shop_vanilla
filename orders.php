@@ -3,7 +3,7 @@
 
     security_check();
 
-    $sql = "SELECT o.id, o.name, o.email, SUM(p.price) AS total
+    $sql = "SELECT o.id, o.name, o.email, ROUND(SUM(p.price),2) AS total
             FROM orders AS o
             JOIN orders_products AS op ON o.id = op.order_id
             JOIN products AS p ON op.product_id = p.id
@@ -16,11 +16,11 @@
 
     <table>
         <tr>
-            <th>NAME</th>
+            <th><?= translate("NAME"); ?></th>
             <td>&nbsp;</td>
-            <th>EMAIL</th>
+            <th><?= translate("EMAIL"); ?></th>
             <td>&nbsp;</td>
-            <th>TOTAL</th>
+            <th><?= translate("TOTAL"); ?></th>
         </tr>
         <?php foreach($result as $row): ?>
             <tr>
@@ -30,7 +30,7 @@
                 <td>&nbsp;</td>
                 <td><?= $row['total']; ?></td>
                 <td>&nbsp;</td>
-                <td><a href="order.php?id=<?=$row['id'];?>">View Order</a></td>
+                <td><a href="order.php?id=<?=$row['id'];?>"><?= translate("VIEW ORDER"); ?></a></td>
             </tr>
         <?php endforeach; ?>
     </table>

@@ -6,17 +6,15 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-
         $stmt = "SELECT p.* FROM products AS p
-                JOIN orders_products AS op ON op.product_id = p.id
-                WHERE op.order_id = ?;";
+                 JOIN orders_products AS op ON op.product_id = p.id
+                 WHERE op.order_id = ?;";
 
         $stmt = $db->prepare($stmt);
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $result = $stmt->get_result();
     }
-
 ?>
 
 <?php require_once("inc/header.php"); ?>
@@ -38,6 +36,9 @@
             </tr>
 
         <?php endforeach; ?>
+
+
     </table>
+
 
 <?php require_once("inc/footer.php"); ?>
