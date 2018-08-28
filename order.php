@@ -36,9 +36,6 @@
             </tr>
 
         <?php endforeach; ?>
-
-
     </table>
-
 
 <?php require_once("inc/footer.php"); ?>
