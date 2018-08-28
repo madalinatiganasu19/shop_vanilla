@@ -64,6 +64,9 @@
             $stmt2->bind_param('sss', $name, $email, $comments);
             $stmt2->execute();
 
+            //get last order id
+            $order_id = $stmt2->insert_id;
+
             //create email
             $subject = translate("Order confirmation | Shop vanilla");
 
