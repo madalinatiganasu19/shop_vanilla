@@ -8,6 +8,14 @@
     $err = "";
     $errors[] = array();
 
+     function security_check() {
+
+         if (!isset($_SESSION["logged"])) {
+             header("location: login.php");
+             die();
+         }
+     }
+
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
     }

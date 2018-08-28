@@ -1,6 +1,8 @@
 <?php
     require_once("common.php");
 
+    security_check();
+
     if (isset($_GET['id'])) {
         //update existing product
         $id = $_GET['id'];

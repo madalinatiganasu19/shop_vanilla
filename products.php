@@ -1,10 +1,7 @@
 <?php
     require_once('common.php');
 
-    if (!isset($_SESSION["logged"])) {
-        header("location: login.php");
-        die();
-    }
+    security_check();
 
     if (isset($_GET['id'])) {
 
