@@ -66,7 +66,6 @@
 
             //get last order id
             $order_id = $stmt2->insert_id;
-
             
             foreach ($_SESSION['cart'] as $key => $value) {
                 $stmt3 = "INSERT INTO orders_products (order_id, product_id) VALUES (?, ?)";
