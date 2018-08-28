@@ -67,6 +67,14 @@
             //get last order id
             $order_id = $stmt2->insert_id;
 
+            
+            foreach ($_SESSION['cart'] as $key => $value) {
+                $stmt3 = "INSERT INTO orders_products (order_id, product_id) VALUES (?, ?)";
+                $stmt3 = $db->prepare($stmt3);
+                $stmt3->bind_param('ii', $order_id, $value);
+                $stmt3->execute();
+            }
+
             //create email
             $subject = translate("Order confirmation | Shop vanilla");
 
