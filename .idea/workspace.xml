@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="266b896b-64b6-46d6-84ed-ad90a2d760bc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/common.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product.php" beforeDir="false" afterPath="$PROJECT_DIR$/product.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +19,8 @@
       <file leaf-file-name="product.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/product.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="157" column="24" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="24" />
+            <state relative-caret-position="244">
+              <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -170,12 +169,12 @@
       <workItem from="1535451728409" duration="14728000" />
       <workItem from="1535466850351" duration="2175000" />
       <workItem from="1535471523389" duration="86000" />
-      <workItem from="1535531133827" duration="11184000" />
+      <workItem from="1535531133827" duration="11674000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="204247000" />
+    <option name="totallyTimeSpent" value="204737000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -375,13 +374,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_2.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-287">
@@ -492,10 +484,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/product.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="157" column="24" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="24" />
+        <state relative-caret-position="244">
+          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
         </state>
       </provider>
     </entry>

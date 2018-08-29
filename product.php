@@ -23,7 +23,9 @@
             $price = sanitize($_POST["price"]);
 
             if (empty($title) || empty($description) || empty($price)) {
-                $err = "All fileds required";
+                $err = "All fields required";
+            } elseif (!preg_match("/^[0-9., ]*$/", $price)){
+                $err = "Price must be a numeric value!";
             }
 
             if (empty($err)) {
@@ -73,7 +75,9 @@
             $price = sanitize($_POST["price"]);
 
             if (empty($title) || empty($description) || empty($price)) {
-                $err = "All fileds required";
+                $err = "All fields required";
+            } elseif (!preg_match("/^[0-9., ]*$/", $price)){
+                $err = "Price must be a numeric value!";
             }
 
             if (empty($err)) {
