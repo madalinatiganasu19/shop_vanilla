@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="266b896b-64b6-46d6-84ed-ad90a2d760bc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/product.php" beforeDir="false" afterPath="$PROJECT_DIR$/product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/db_2018_08_28_12_10_30.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_2018_08_28_12_10_30.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +16,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="product.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="product.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/product.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="244">
               <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db_2018_08_28_12_09_12.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/db_2018_08_28_12_09_12.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-114" />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db_2018_08_28_12_10_30.sql" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/db_2018_08_28_12_10_30.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
             </state>
           </provider>
         </entry>
@@ -74,6 +90,7 @@
         <option value="$PROJECT_DIR$/products.php" />
         <option value="$PROJECT_DIR$/common.php" />
         <option value="$PROJECT_DIR$/product.php" />
+        <option value="$PROJECT_DIR$/database/db_2018_08_28_12_10_30.sql" />
       </list>
     </option>
   </component>
@@ -104,6 +121,11 @@
             <path>
               <item name="shop_vanilla" type="b2602c69:ProjectViewProjectNode" />
               <item name="shop_vanilla" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shop_vanilla" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shop_vanilla" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="shop_vanilla" type="b2602c69:ProjectViewProjectNode" />
@@ -169,12 +191,12 @@
       <workItem from="1535451728409" duration="14728000" />
       <workItem from="1535466850351" duration="2175000" />
       <workItem from="1535471523389" duration="86000" />
-      <workItem from="1535531133827" duration="11674000" />
+      <workItem from="1535531133827" duration="11809000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="204737000" />
+    <option name="totallyTimeSpent" value="204872000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -208,14 +230,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/inc/upload.php" />
-    <entry file="file://$PROJECT_DIR$/products.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cart.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1767">
@@ -495,6 +509,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/db_2018_08_28_12_09_12.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-114" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/db_2018_08_28_12_10_30.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
         </state>
       </provider>
     </entry>
