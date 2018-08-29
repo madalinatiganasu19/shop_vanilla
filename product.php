@@ -18,25 +18,45 @@
         if (isset($_POST['save'])) {
 
             //validate data
-            validate($title, $description, $price, $err);
-
-            //validate & upload image
-            validate_and_upload_image($image, $err);
-
-            if(empty($image)) {
-                $image = $row["image"];
-            }
+            $title = validate($_POST["title"]);
+            $description = validate($_POST["description"]);
+            $price = validate($_POST["price"]);
 
             if (empty($err)) {
+                //validate & upload image
+                $upload_dir = "images/";
 
-                $stmt2 = "UPDATE products SET title = ?, description = ?, price = ?, image = ? WHERE id = ?";
+                $file_name = $_FILES["image"]["name"];
+                $tmp_name = $_FILES["image"]["tmp_name"];
+                $file = $upload_dir . basename($_FILES["image"]["name"]);
+                $image_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-                $stmt2 = $db->prepare($stmt2);
-                $stmt2->bind_param('ssdsi', $title, $description, $price, $image, $id);
-                $stmt2->execute();
+                if (!empty($file_name)) {
+                    if ($_FILES["image"]["type"] != "image/jpg" && $_FILES["image"]["type"] != "image/jpeg" && $_FILES["image"]["type"] != "image/png") {
+                        $err = translate("Only .jpg, .jpeg, .png files allowed!");
+                    } elseif (file_exists($file)) {
+                        $file_name = uniqid();
+                    }
+                }
 
-                header("location: products.php");
-                die();
+                if (empty($file_name)) {
+                    $image = $row["image"];
+                }
+
+                if (empty($err)) {
+                    if (move_uploaded_file($tmp_name, $upload_dir . $file_name)) {
+                        $image = $file_name;
+                    }
+
+                    $stmt2 = "UPDATE products SET title = ?, description = ?, price = ?, image = ? WHERE id = ?";
+
+                    $stmt2 = $db->prepare($stmt2);
+                    $stmt2->bind_param('ssdsi', $title, $description, $price, $image, $id);
+                    $stmt2->execute();
+
+                    header("location: products.php");
+                    die();
+                }
             }
         }
     } else {
@@ -44,25 +64,45 @@
         if (isset($_POST['save'])) {
 
             //validate data
-            validate($title, $description, $price, $err);
-
-            //validate & upload image
-            validate_and_upload_image($image, $err);
-
-            if(empty($image)) {
-                $err = translate("All fields required!");
-            }
+            $title = validate($_POST["title"]);
+            $description = validate($_POST["description"]);
+            $price = validate($_POST["price"]);
 
             if (empty($err)) {
+                //validate & upload image
+                $upload_dir = "images/";
 
-                $stmt2 = "INSERT INTO products (title, description, price, image) VALUES (?,?,?,?)";
+                $file_name = $_FILES["image"]["name"];
+                $tmp_name = $_FILES["image"]["tmp_name"];
+                $file = $upload_dir . basename($_FILES["image"]["name"]);
+                $image_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-                $stmt2 = $db->prepare($stmt2);
-                $stmt2->bind_param('ssds', $title, $description, $price, $image);
-                $stmt2->execute();
+                if (!empty($file_name)) {
+                    if ($_FILES["image"]["type"] != "image/jpg" && $_FILES["image"]["type"] != "image/jpeg" && $_FILES["image"]["type"] != "image/png") {
+                        $err = translate("Only .jpg, .jpeg, .png files allowed!");
+                    } elseif (file_exists($file)) {
+                        $file_name = uniqid();
+                    }
+                }
 
-                header("location: products.php");
-                die();
+                if (empty($file_name)) {
+                    $err = translate("All fields required!");
+                }
+
+                if (empty($err)) {
+                    if (move_uploaded_file($tmp_name, $upload_dir . $file_name)) {
+                        $image = $file_name;
+                    }
+
+                    $stmt2 = "INSERT INTO products (title, description, price, image) VALUES (?,?,?,?)";
+
+                    $stmt2 = $db->prepare($stmt2);
+                    $stmt2->bind_param('ssds', $title, $description, $price, $image);
+                    $stmt2->execute();
+
+                    header("location: products.php");
+                    die();
+                }
             }
         }
     }
