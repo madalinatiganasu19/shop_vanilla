@@ -18,9 +18,13 @@
         if (isset($_POST['save'])) {
 
             //validate data
-            $title = validate($_POST["title"]);
-            $description = validate($_POST["description"]);
-            $price = validate($_POST["price"]);
+            $title = sanitize($_POST["title"]);
+            $description = sanitize($_POST["description"]);
+            $price = sanitize($_POST["price"]);
+
+            if (empty($title) || empty($description) || empty($price)) {
+                $err = "All fileds required";
+            }
 
             if (empty($err)) {
                 //validate & upload image
@@ -39,7 +43,7 @@
                     }
                 }
 
-                if (empty($file_name)) {
+                if (empty($file_name) && !empty($row['image'])) {
                     $image = $row["image"];
                 }
 
@@ -64,9 +68,13 @@
         if (isset($_POST['save'])) {
 
             //validate data
-            $title = validate($_POST["title"]);
-            $description = validate($_POST["description"]);
-            $price = validate($_POST["price"]);
+            $title = sanitize($_POST["title"]);
+            $description = sanitize($_POST["description"]);
+            $price = sanitize($_POST["price"]);
+
+            if (empty($title) || empty($description) || empty($price)) {
+                $err = "All fileds required";
+            }
 
             if (empty($err)) {
                 //validate & upload image
@@ -104,23 +112,50 @@
                     die();
                 }
             }
+        } else {
+            $price = "";
+            $description = "";
+            $title = "";
         }
     }
+
+    if (isset($_GET['id'])) {
+        if (isset($_POST['save'])) {
+            $price = $_POST["price"];
+            $description = $_POST["description"];
+            $title = $_POST["title"];
+            $image = translate("Image: ") . $_FILES["image"]["name"];
+        } else {
+            $price = $row['price'];
+            $description = $row['description'];
+            $title = $row['title'];
+            $image = $row['image'];
+        }
+    } else {
+        if (isset($_POST['save'])) {
+            $price = $_POST["price"];
+            $description = $_POST["description"];
+            $title = $_POST["title"];
+            $image = translate("Image: ") . $_FILES["image"]["name"];
+        } else {
+            $price = "";
+            $description = "";
+            $title = "";
+            $image = "";
+        }
+    }
+
 ?>
 
 <?php require_once("inc/header.php"); ?>
 
     <form method="POST" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="<?= translate("Title"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["title"] : $row['title']) : (isset($_POST["save"]) ? $_POST["title"] : ""); ?>">
-        <textarea cols="20" rows="5" name="description" placeholder="<?= translate("Description"); ?>"><?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["description"] : $row['description']) : (isset($_POST["save"]) ? $_POST["description"] : ""); ?></textarea>
-        <input type="text" name="price" placeholder="<?= translate("Price"); ?>" value="<?= isset($_GET['id']) ? (isset($_POST["save"]) ? $_POST["price"] : $row['price']) : (isset($_POST["save"]) ? $_POST["price"] : ""); ?>">
+        <input type="text" name="title" placeholder="<?= translate("Title"); ?>" value="<?= $title; ?>">
+        <textarea cols="20" rows="5" name="description" placeholder="<?= translate("Description"); ?>"><?= $description; ?></textarea>
+        <input type="text" name="price" placeholder="<?= translate("Price"); ?>" value="<?= $price ?>">
 
         <label for="image">
-            <?=
-                isset($_GET['id']) ?
-                    translate("Image: ") . (isset($_POST["save"]) ? $_FILES["image"]["name"] : $row['image']) :
-                    (isset($_POST["save"]) ? translate("Image: ") . $_FILES["image"]["name"] : "");
-            ?>
+            <?= $image; ?>
         </label>
 
         <input type="file" name="image">

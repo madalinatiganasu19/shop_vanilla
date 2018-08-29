@@ -29,13 +29,3 @@
 
         return $input;
     }
-
-    function validate($input) {
-        $input = sanitize($input);
-
-        if (empty($input)) {
-            return $err = translate("All fields required!");
-        }
-
-        return $input;
-    }
