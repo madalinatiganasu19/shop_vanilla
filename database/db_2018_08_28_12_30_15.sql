@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 29 Aug 2018 la 13:06
+-- Generation Time: 28 Aug 2018 la 12:10
 -- Versiune server: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -42,9 +42,7 @@ CREATE TABLE `orders_products` (
 -- Indexes for table `orders_products`
 --
 ALTER TABLE `orders_products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -55,17 +53,6 @@ ALTER TABLE `orders_products`
 --
 ALTER TABLE `orders_products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restrictii pentru tabele sterse
---
-
---
--- Restrictii pentru tabele `orders_products`
---
-ALTER TABLE `orders_products`
-  ADD CONSTRAINT `orders_products_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  ADD CONSTRAINT `orders_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
