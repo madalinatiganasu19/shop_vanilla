@@ -3,6 +3,40 @@
 
     security_check();
 
+    function validate_data($input) {
+        if (empty($input)) {
+            $err = "All fields required";
+            return $err;
+        }
+    }
+
+    function validate_image() {
+        if (!empty($_FILES["image"]["name"])) {
+            if ($_FILES["image"]["type"] != "image/jpg" && $_FILES["image"]["type"] != "image/jpeg" && $_FILES["image"]["type"] != "image/png") {
+                $err = translate("Only .jpg, .jpeg, .png files allowed!");
+                return $err;
+            }
+        }
+    }
+
+    function rename_duplicates($file) {
+        if (!empty($_FILES["image"]["name"])) {
+            if (file_exists($file)) {
+                $file_name = uniqid();
+                return $file_name;
+            }
+            return $file_name = $_FILES["image"]["name"];
+        }
+
+    }
+
+    function upload_image($upload_dir, $file_name) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $upload_dir . $file_name)) {
+            $image = $file_name;
+            return $image;
+        }
+    }
+
     if (isset($_GET['id'])) {
         //update existing product
         $id = $_GET['id'];
@@ -22,37 +56,27 @@
             $description = sanitize($_POST["description"]);
             $price = sanitize($_POST["price"]);
 
-            if (empty($title) || empty($description) || empty($price)) {
-                $err = "All fields required";
-            } elseif (!preg_match("/^[0-9., ]*$/", $price)){
+            $err = validate_data($title);
+            $err = validate_data($description);
+            $err = validate_data($price);
+
+            if (!preg_match("/^[0-9., ]*$/", $price)){
                 $err = "Price must be a numeric value!";
             }
 
             if (empty($err)) {
                 //validate & upload image
                 $upload_dir = "images/";
-
-                $file_name = $_FILES["image"]["name"];
-                $tmp_name = $_FILES["image"]["tmp_name"];
                 $file = $upload_dir . basename($_FILES["image"]["name"]);
-                $image_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-                if (!empty($file_name)) {
-                    if ($_FILES["image"]["type"] != "image/jpg" && $_FILES["image"]["type"] != "image/jpeg" && $_FILES["image"]["type"] != "image/png") {
-                        $err = translate("Only .jpg, .jpeg, .png files allowed!");
-                    } elseif (file_exists($file)) {
-                        $file_name = uniqid();
-                    }
-                }
+                $file_name = validate_image($file);
 
                 if (empty($file_name) && !empty($row['image'])) {
                     $image = $row["image"];
                 }
 
                 if (empty($err)) {
-                    if (move_uploaded_file($tmp_name, $upload_dir . $file_name)) {
-                        $image = $file_name;
-                    }
+                    $image = upload_image($upload_dir, $file_name);
 
                     $stmt2 = "UPDATE products SET title = ?, description = ?, price = ?, image = ? WHERE id = ?";
 
@@ -74,37 +98,28 @@
             $description = sanitize($_POST["description"]);
             $price = sanitize($_POST["price"]);
 
-            if (empty($title) || empty($description) || empty($price)) {
-                $err = "All fields required";
-            } elseif (!preg_match("/^[0-9., ]*$/", $price)){
+            $err = validate_data($title);
+            $err = validate_data($description);
+            $err = validate_data($price);
+
+            if (!preg_match("/^[0-9., ]*$/", $price)){
                 $err = "Price must be a numeric value!";
             }
 
             if (empty($err)) {
                 //validate & upload image
                 $upload_dir = "images/";
-
-                $file_name = $_FILES["image"]["name"];
-                $tmp_name = $_FILES["image"]["tmp_name"];
                 $file = $upload_dir . basename($_FILES["image"]["name"]);
-                $image_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-                if (!empty($file_name)) {
-                    if ($_FILES["image"]["type"] != "image/jpg" && $_FILES["image"]["type"] != "image/jpeg" && $_FILES["image"]["type"] != "image/png") {
-                        $err = translate("Only .jpg, .jpeg, .png files allowed!");
-                    } elseif (file_exists($file)) {
-                        $file_name = uniqid();
-                    }
-                }
+                $file_name = rename_duplicates($file);
+                $err = validate_image();
 
                 if (empty($file_name)) {
                     $err = translate("All fields required!");
                 }
 
                 if (empty($err)) {
-                    if (move_uploaded_file($tmp_name, $upload_dir . $file_name)) {
-                        $image = $file_name;
-                    }
+                    $image = upload_image($upload_dir, $file_name);
 
                     $stmt2 = "INSERT INTO products (title, description, price, image) VALUES (?,?,?,?)";
 
@@ -116,10 +131,6 @@
                     die();
                 }
             }
-        } else {
-            $price = "";
-            $description = "";
-            $title = "";
         }
     }
 
