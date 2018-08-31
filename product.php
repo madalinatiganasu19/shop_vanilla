@@ -10,6 +10,15 @@
         }
     }
 
+    function validate_numeric_data($input) {
+        if (empty($input)) {
+            $err = "All fields required";
+        } elseif (!preg_match("/^[0-9., ]*$/", $input)){
+            $err = "Price must be a numeric value!";
+        }
+        return $err;
+    }
+
     function validate_image() {
         if (!empty($_FILES["image"]["name"])) {
             if ($_FILES["image"]["type"] != "image/jpg" && $_FILES["image"]["type"] != "image/jpeg" && $_FILES["image"]["type"] != "image/png") {
@@ -58,11 +67,7 @@
 
             $err = validate_data($title);
             $err = validate_data($description);
-            $err = validate_data($price);
-
-            if (!preg_match("/^[0-9., ]*$/", $price)){
-                $err = "Price must be a numeric value!";
-            }
+            $err = validate_numeric_data($price);
 
             if (empty($err)) {
                 //validate & upload image
@@ -100,11 +105,7 @@
 
             $err = validate_data($title);
             $err = validate_data($description);
-            $err = validate_data($price);
-
-            if (!preg_match("/^[0-9., ]*$/", $price)){
-                $err = "Price must be a numeric value!";
-            }
+            $err = validate_numeric_data($price);
 
             if (empty($err)) {
                 //validate & upload image
